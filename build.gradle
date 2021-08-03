@@ -1,0 +1,31 @@
+import java.text.SimpleDateFormat
+
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+    maven { url = 'https://mvn.exceptionflug.de/repository/exceptionflug-public/' }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    compileOnly "net.md-5:bungeecord-api:1.15-SNAPSHOT"
+    compileOnly 'de.exceptionflug:protocolize-api:1.7.1-SNAPSHOT'
+}
+
+processResources {
+    filesNotMatching(["**.png"]) {
+        expand version: version
+    }
+}
+
+compileJava.dependsOn clean

@@ -1,0 +1,4 @@
+name: PacksManager
+main: io.th0rgal.packsmanager.PacksManagerPlugin
+version: ${version}
+author: Th0rgal
