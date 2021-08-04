@@ -5,7 +5,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.protocol.Protocol;
 import net.md_5.bungee.protocol.ProtocolConstants;
 
-public class PacksManagerPlugin extends Plugin {
+public class BungeePacksLayerPlugin extends Plugin {
 
     @Override
     public void onEnable() {

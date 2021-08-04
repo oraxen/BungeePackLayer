@@ -1,5 +1,5 @@
 name: BungeeLayer
-main: io.th0rgal.packsmanager.PacksManagerPlugin
+main: io.th0rgal.packsmanager.BungeePacksLayerPlugin
 version: ${version}
 depends: [protocolize-plugin]
 author: Th0rgal
