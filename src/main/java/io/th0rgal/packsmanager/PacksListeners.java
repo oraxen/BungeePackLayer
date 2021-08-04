@@ -13,17 +13,16 @@ import java.util.UUID;
 
 public class PacksListeners extends PacketAdapter<SendPackPacket> implements Listener {
 
+    private final Map<UUID, String> map = new HashMap<>();
+
     public PacksListeners() {
         super(Stream.DOWNSTREAM, SendPackPacket.class);
     }
 
-    Map<UUID, String> map = new HashMap<>();
-
     @Override
-    public void receive(PacketReceiveEvent<SendPackPacket> event) {
-        SendPackPacket packet = event.getPacket();
-        System.out.println(packet);
-        UUID uuid = event.getPlayer().getUniqueId();
+    public void receive(final PacketReceiveEvent<SendPackPacket> event) {
+        final SendPackPacket packet = event.getPacket();
+        final UUID uuid = event.getPlayer().getUniqueId();
         if (map.containsKey(uuid) && map.get(uuid).equals(packet.getSha1())) {
             event.setCancelled(true);
             return;
@@ -32,7 +31,7 @@ public class PacksListeners extends PacketAdapter<SendPackPacket> implements Lis
     }
 
     @EventHandler
-    public void onDisconnect(PlayerDisconnectEvent event) {
+    public void onDisconnect(final PlayerDisconnectEvent event) {
         map.remove(event.getPlayer().getUniqueId());
     }
 

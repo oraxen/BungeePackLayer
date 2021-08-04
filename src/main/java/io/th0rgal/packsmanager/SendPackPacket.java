@@ -68,8 +68,6 @@ public class SendPackPacket extends AbstractPacket {
         hasPromptMessage = buf.readBoolean();
         if (hasPromptMessage)
             message = readString(buf);
-        if (hasPromptMessage)
-            System.out.println(message);
         BufferUtil.finishBuffer(this, buf, direction, protocolVersion);
     }
 
