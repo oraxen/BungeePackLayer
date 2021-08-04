@@ -64,6 +64,7 @@ public class SendPackPacket extends AbstractPacket {
 
     @Override
     public void read(final ByteBuf buf, final ProtocolConstants.Direction direction, final int protocolVersion) {
+        System.out.println("TEST");
         url = readString(buf);
         sha1 = readString(buf);
         BufferUtil.finishBuffer(this, buf, direction, protocolVersion);
