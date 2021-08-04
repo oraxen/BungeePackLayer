@@ -1,6 +1,9 @@
 package io.th0rgal.packsmanager;
 
 import de.exceptionflug.protocolize.api.protocol.AbstractPacket;
+import de.exceptionflug.protocolize.api.util.BufferUtil;
+import io.netty.buffer.ByteBuf;
+import net.md_5.bungee.protocol.ProtocolConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +16,6 @@ public class SendPackPacket extends AbstractPacket {
 
     private String url;
     private String sha1;
-    private boolean forced;
-    private boolean hasPromptMessage;
-    private String promptMessage;
 
     public static final Map<Integer, Integer> MAPPING = new HashMap<>();
 
@@ -37,13 +37,9 @@ public class SendPackPacket extends AbstractPacket {
         MAPPING.put(MINECRAFT_1_17_1, 0x3C);
     }
 
-    public SendPackPacket(String url, String sha1, boolean forced,
-                          boolean hasPromptMessage, String promptMessage) {
+    public SendPackPacket(String url, String sha1) {
         this.url = url;
         this.sha1 = sha1;
-        this.forced = forced;
-        this.hasPromptMessage = hasPromptMessage;
-        this.promptMessage = promptMessage;
     }
 
     public SendPackPacket() {
@@ -66,28 +62,17 @@ public class SendPackPacket extends AbstractPacket {
         return sha1;
     }
 
-    public void setForced(boolean forced) {
-        this.forced = forced;
+    @Override
+    public void read(final ByteBuf buf, final ProtocolConstants.Direction direction, final int protocolVersion) {
+        url = readString(buf);
+        sha1 = readString(buf);
+        BufferUtil.finishBuffer(this, buf, direction, protocolVersion);
     }
 
-    public boolean isForced() {
-        return forced;
-    }
-
-    public void setHasPromptMessage(boolean hasPromptMessage) {
-        this.hasPromptMessage = hasPromptMessage;
-    }
-
-    public boolean hasPromptMessage() {
-        return hasPromptMessage;
-    }
-
-    public void setPromptMessage(String promptMessage) {
-        this.promptMessage = promptMessage;
-    }
-
-    public String getPromptMessage() {
-        return promptMessage;
+    @Override
+    public void write(final ByteBuf buf, final ProtocolConstants.Direction direction, final int protocolVersion) {
+        writeString(url, buf);
+        writeString(sha1, buf);
     }
 
     @Override
