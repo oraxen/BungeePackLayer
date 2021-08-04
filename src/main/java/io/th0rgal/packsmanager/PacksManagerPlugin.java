@@ -14,7 +14,9 @@ public class PacksManagerPlugin extends Plugin {
                 ProtocolConstants.Direction.TO_CLIENT,
                 SendPackPacket.class,
                 SendPackPacket.MAPPING);
-        ProtocolAPI.getEventManager().registerListener(new PacksListeners());
+        PacksListeners listeners = new PacksListeners();
+        ProtocolAPI.getEventManager().registerListener(listeners);
+        this.getProxy().getPluginManager().registerListener(this, listeners);
     }
 
 }

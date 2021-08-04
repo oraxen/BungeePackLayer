@@ -16,6 +16,9 @@ public class SendPackPacket extends AbstractPacket {
 
     private String url;
     private String sha1;
+    private boolean forced;
+    private boolean hasPromptMessage;
+    private String message;
 
     public static final Map<Integer, Integer> MAPPING = new HashMap<>();
 
@@ -35,11 +38,6 @@ public class SendPackPacket extends AbstractPacket {
         MAPPING.put(MINECRAFT_1_16_4, 0x3C);
         MAPPING.put(MINECRAFT_1_17, 0x3C);
         MAPPING.put(MINECRAFT_1_17_1, 0x3C);
-    }
-
-    public SendPackPacket(String url, String sha1) {
-        this.url = url;
-        this.sha1 = sha1;
     }
 
     public SendPackPacket() {
@@ -64,9 +62,14 @@ public class SendPackPacket extends AbstractPacket {
 
     @Override
     public void read(final ByteBuf buf, final ProtocolConstants.Direction direction, final int protocolVersion) {
-        System.out.println("TEST");
         url = readString(buf);
         sha1 = readString(buf);
+        forced = buf.readBoolean();
+        hasPromptMessage = buf.readBoolean();
+        if (hasPromptMessage)
+            message = readString(buf);
+        if (hasPromptMessage)
+            System.out.println(message);
         BufferUtil.finishBuffer(this, buf, direction, protocolVersion);
     }
 
