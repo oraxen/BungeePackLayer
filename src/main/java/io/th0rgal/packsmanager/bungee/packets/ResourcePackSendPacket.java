@@ -11,7 +11,7 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.*;
 
-public class SendPackPacket extends AbstractPacket {
+public class ResourcePackSendPacket extends AbstractPacket {
 
     private String url;
     private String sha1;
@@ -20,7 +20,16 @@ public class SendPackPacket extends AbstractPacket {
     private String message;
 
     public static final List<ProtocolIdMapping> MAPPINGS = Arrays.asList(
-            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_14, MINECRAFT_1_18_2, 0x3C),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_8, MINECRAFT_1_8, 0x48),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_9, MINECRAFT_1_11_2, 0x32),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_12, MINECRAFT_1_12, 0x33),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_12_1, MINECRAFT_1_12_2, 0x34),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_13, MINECRAFT_1_13_2, 0x37),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_14, MINECRAFT_1_14_4, 0x39),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_15, MINECRAFT_1_15_2, 0x3A),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_16, MINECRAFT_1_16_1, 0x39),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_16_2, MINECRAFT_1_16_5, 0x38),
+            AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_17, MINECRAFT_1_18_2, 0x3C),
             AbstractProtocolMapping.rangedIdMapping(MINECRAFT_1_19, MINECRAFT_1_19, 0x3A)
     );
 
@@ -87,7 +96,7 @@ public class SendPackPacket extends AbstractPacket {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SendPackPacket that = (SendPackPacket) o;
+        final ResourcePackSendPacket that = (ResourcePackSendPacket) o;
         return that.sha1.equals(this.sha1);
     }
 
@@ -98,6 +107,10 @@ public class SendPackPacket extends AbstractPacket {
 
     @Override
     public String toString() {
-        return this.sha1;
+        return "Url: " + this.url +
+                ", Sha1: " + this.sha1 +
+                ", Is forced: " + this.forced +
+                ", Has prompt message: " + this.hasPromptMessage +
+                ", Message: " + this.message;
     }
 }

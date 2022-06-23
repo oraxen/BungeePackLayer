@@ -5,23 +5,23 @@ import dev.simplix.protocolize.api.listener.AbstractPacketListener;
 import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
 import dev.simplix.protocolize.api.listener.PacketSendEvent;
 
-import io.th0rgal.packsmanager.bungee.packets.SendPackPacket;
+import io.th0rgal.packsmanager.bungee.packets.ResourcePackSendPacket;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SendPackPacketListener extends AbstractPacketListener<SendPackPacket> {
+public class ResourcePackSendPacketListener extends AbstractPacketListener<ResourcePackSendPacket> {
 
     private final Map<UUID, String> map = new HashMap<>();
 
-    public SendPackPacketListener() {
-        super(SendPackPacket.class, Direction.DOWNSTREAM, 0);
+    public ResourcePackSendPacketListener() {
+        super(ResourcePackSendPacket.class, Direction.DOWNSTREAM, 0);
     }
 
     @Override
-    public void packetReceive(final PacketReceiveEvent<SendPackPacket> event) {
-        final SendPackPacket packet = event.packet();
+    public void packetReceive(final PacketReceiveEvent<ResourcePackSendPacket> event) {
+        final ResourcePackSendPacket packet = event.packet();
         final UUID uuid = event.player().uniqueId();
         if (map.containsKey(uuid) && map.get(uuid).equals(packet.getSha1())) {
             event.cancelled(true);
@@ -31,7 +31,7 @@ public class SendPackPacketListener extends AbstractPacketListener<SendPackPacke
     }
 
     @Override
-    public void packetSend(PacketSendEvent<SendPackPacket> event) {
+    public void packetSend(PacketSendEvent<ResourcePackSendPacket> event) {
 
     }
 
