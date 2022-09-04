@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'io.th0rgal.packsmanager'
-def pluginVersion = '1.0.0'
+def pluginVersion = '1.1.0'
 def pluginDescription = 'Optimize texture pack management on bungee/velocity to never double send the same pack.'
 version = pluginVersion
 
