@@ -1,4 +1,4 @@
-name: BungeeLayer
+name: BungeePackLayer
 main: io.th0rgal.packsmanager.bungee.BungeePackLayerBungeePlugin
 version: ${version}
 description: ${description}
