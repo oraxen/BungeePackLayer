@@ -17,9 +17,8 @@ repositories {
 dependencies {
     compileOnly("dev.simplix:protocolize-api:2.3.0")
     compileOnly("net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT")
-    compileOnly("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
-    compileOnly("com.velocitypowered:velocity-proxy:3.0.1")
-    annotationProcessor("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
+    compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
 }
 
 

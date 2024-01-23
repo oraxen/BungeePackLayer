@@ -1,41 +1,32 @@
 package io.th0rgal.packsmanager.velocity.listeners;
 
-import com.velocitypowered.proxy.protocol.packet.ResourcePackRequest;
+import com.velocitypowered.api.event.PostOrder;
+import com.velocitypowered.api.event.ResultedEvent;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.player.ServerResourcePackSendEvent;
+import com.velocitypowered.api.proxy.player.ResourcePackInfo;
 
-import dev.simplix.protocolize.api.Direction;
-import dev.simplix.protocolize.api.listener.AbstractPacketListener;
-import dev.simplix.protocolize.api.listener.PacketReceiveEvent;
-import dev.simplix.protocolize.api.listener.PacketSendEvent;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ResourcePackRequestListener extends AbstractPacketListener<ResourcePackRequest> {
+public class ResourcePackRequestListener {
 
-    private final Map<UUID, String> map = new HashMap<>();
+    private final Map<UUID, byte[]> map = new HashMap<>();
 
-    public ResourcePackRequestListener() {
-        super(ResourcePackRequest.class, Direction.DOWNSTREAM, 0);
-    }
-
-    @Override
-    public void packetReceive(PacketReceiveEvent<ResourcePackRequest> event) {
-        final ResourcePackRequest resourcePackRequest = event.packet();
-        final UUID uuid = event.player().uniqueId();
-        if (map.containsKey(uuid) && map.get(uuid).equals(resourcePackRequest.getHash())) {
-            event.cancelled(true);
+    @Subscribe(order = PostOrder.FIRST)
+    public void packetReceive(final ServerResourcePackSendEvent event) {
+        final ResourcePackInfo resourcePackRequest = event.getProvidedResourcePack();
+        final UUID uuid = event.getServerConnection().getPlayer().getUniqueId();
+        if (map.containsKey(uuid) && Arrays.equals(map.get(uuid), resourcePackRequest.getHash())) {
+            event.setResult(ResultedEvent.GenericResult.denied());
             return;
         }
         map.put(uuid, resourcePackRequest.getHash());
     }
-
-    @Override
-    public void packetSend(PacketSendEvent<ResourcePackRequest> event) {
-
-    }
-
     public void removePlayer(final UUID uuid) {
         map.remove(uuid);
     }
+
 }
